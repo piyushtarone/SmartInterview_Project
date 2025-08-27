@@ -2,11 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const ejsMate = require('ejs-mate');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Set up ejs-mate as the view engine
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -80,7 +86,7 @@ app.post('/api/evaluate-responses', async (req, res) => {
     You MUST return ONLY a single, valid JSON object and nothing else. Do not include markdown or any explanatory text.
     The JSON object must have this exact structure:
     {
-      "results": [{"question": "string", "score": "number", "improvement": "string"}],
+      "results": [{"question": "string", "score": "number", "improvement": "string"},)"answer": "string"],
       "overall_proficiency": "string",
       "feedback": "string"
     }
@@ -115,6 +121,37 @@ app.post('/api/evaluate-responses', async (req, res) => {
 });
 
 
+// Interview route (root URL)
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'interview.html'));
+});
+
+// Home route
+app.get('/home', (req, res) => {
+    res.render('home');
+});
+
+// About route
+app.get('/about', (req, res) => {
+    res.render('pages/about');
+});
+
+// Profile route
+app.get('/profile', (req, res) => {
+    res.render('pages/profile');
+});
+
+// Contact route
+app.get('/contact', (req, res) => {
+    res.render('pages/contact');
+});
+
+// Signup route
+app.get('/signup', (req, res) => {
+    res.render('user/signup');
+});
+
+// Fallback route
 app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });

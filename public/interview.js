@@ -8,39 +8,60 @@ const difficulty = sessionStorage.getItem("level");
 const cameraEnabled = sessionStorage.getItem("camera") === "true";
 
 window.onload = async () => {
+    const loader = document.getElementById("loader");
+    const loaderText = document.getElementById("loader-text");
+
+    // Show the loader immediately
+    loader.style.display = 'flex';
+    loaderText.textContent = 'Warming up the AI interviewer...';
+
+    // Check for session data first
+    const domain = sessionStorage.getItem("domain");
+    const difficulty = sessionStorage.getItem("level");
+    const cameraEnabled = sessionStorage.getItem("camera") === "true";
+
     if (!domain || !difficulty) {
-        alert("Session expired. Redirecting to home page.");
-        window.location.href = "index.html";
-        return;
+        loaderText.textContent = 'Error: No domain or difficulty set. Please start again from the home page.';
+        return; // Stop execution
     }
 
     try {
+        // Get media permissions
         await navigator.mediaDevices.getUserMedia({ video: cameraEnabled, audio: true });
-    } catch (err) {
-        alert("Camera and microphone access are required. Please allow permissions and refresh.");
-        return;
-    }
 
-    document.getElementById("loader").style.display = 'flex';
-
-    try {
+        // Fetch questions from the backend
+        loaderText.textContent = 'Generating your questions...';
         const res = await fetch('/api/generate-questions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ domain, difficulty })
         });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || `Server responded with status: ${res.status}`);
+        }
+
         const data = await res.json();
-        if (!res.ok || !data.questions) throw new Error(data.error || "Failed to generate questions.");
-        
+        if (!data.questions || data.questions.length === 0) {
+            throw new Error("The AI failed to generate questions. Please try again.");
+        }
+
         questions = data.questions;
         if (cameraEnabled) {
             startCamera();
         }
         startInterview();
+
     } catch (error) {
-        document.getElementById("loader-text").textContent = `Error: ${error.message}`;
+        console.error("Initialization Failed:", error);
+        loaderText.innerHTML = `<strong>Initialization Failed:</strong><br>${error.message}<br><br>Please check that your server is running and your .env file is correct.`;
+        return; 
     } finally {
-        document.getElementById("loader").style.display = 'none';
+        
+        if (questions.length > 0) {
+            loader.style.display = 'none';
+        }
     }
 };
 
@@ -64,9 +85,7 @@ async function startCamera() {
     }
 }
 
-// ... (variable declarations at the top remain the same) ...
-
-// **CORRECTION**: Updated posture analysis logic
+// posture analysis logic
 function analyzePosture(pose) {
     const keypoints = pose.keypoints.reduce((map, kp) => {
         map[kp.part] = kp.position;
@@ -79,9 +98,9 @@ function analyzePosture(pose) {
         const spineVerticality = Math.abs(hipY - shoulderY);
 
         // Adjusted thresholds for better accuracy
-        if (spineVerticality < 60) {
+        if (spineVerticality < 40) {
             updatePostureUI("poor", "Poor", "Slouching detected. Please sit up straighter.");
-        } else if (spineVerticality < 80) {
+        } else if (spineVerticality < 50) {
             updatePostureUI("moderate", "Okay", "Slight slouch. Try to straighten your back.");
         } else {
             updatePostureUI("good", "Good", "Good posture, keep it up!");
@@ -100,16 +119,9 @@ function updatePostureUI(statusClass, statusText, recommendation) {
     recommendElem.className = statusClass;
     recommendElem.textContent = recommendation;
     
-    postureData.spineAngle = statusText; // Keep this for the final report
+    postureData.spineAngle = statusText; 
 }
-
-
-// ... (The rest of the interview.js file remains the same as the previous version) ...
-// The `window.onload`, `startCamera`, `startSpeechRecognition`, `startInterview`,
-// `displayQuestion`, `speakQuestion`, `saveAnswerAndProceed`, `evaluateInterview`,
-// and `displayEvaluation` functions are unchanged from the last update.
-
-
+//speech recognition handling
 function startSpeechRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
@@ -140,7 +152,7 @@ function startInterview() {
     document.getElementById("interview-container").style.display = 'block';
     displayQuestion();
 }
-
+//Reset answer field and update counter
 function displayQuestion() {
     document.getElementById("question-text").textContent = questions[currentIndex];
     document.getElementById("question-counter").textContent = `Question ${currentIndex + 1} of ${questions.length}`;
@@ -148,7 +160,7 @@ function displayQuestion() {
     speakQuestion(questions[currentIndex]);
     startSpeechRecognition();
 }
-
+//speech synthesis handling
 function speakQuestion(text) {
     const synth = window.speechSynthesis;
     synth.cancel();
@@ -156,7 +168,7 @@ function speakQuestion(text) {
     utter.rate = 0.9;
     synth.speak(utter);
 }
-
+//Save answer and proceed to next question or evaluation
 function saveAnswerAndProceed() {
     if (recognition) recognition.stop();
     const response = document.getElementById("typed-answer").value.trim();
