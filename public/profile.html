@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile • InterviewAI</title>
+    <link rel="stylesheet" href="con_styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .page-hero { padding: 120px 0 32px; text-align:center; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
+        .page-title { font-size: 2.25rem; font-weight: 800; color:#111827; }
+        .muted { color:#6b7280; }
+        .grid { display:grid; gap:24px; }
+        .cols { display:grid; grid-template-columns: 320px 1fr; gap:24px; }
+        .card { background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.06); padding:20px; }
+        .profile-header { display:flex; align-items:center; gap:16px; }
+        .avatar { width:72px; height:72px; border-radius:50%; background:#e5e7eb; display:flex; align-items:center; justify-content:center; color:#2563eb; font-size:28px; font-weight:700; }
+        .stat { display:grid; grid-template-columns:1fr auto; gap:6px; align-items:center; }
+        .badge { display:inline-block; padding:6px 10px; border-radius:999px; background:#eff6ff; color:#2563eb; font-weight:600; font-size:.9rem; }
+        table { width:100%; border-collapse:collapse; }
+        th, td { text-align:left; padding:10px 12px; border-bottom:1px solid #eef2f7; }
+        th { color:#6b7280; font-weight:600; }
+        .empty { color:#6b7280; text-align:center; padding:12px; }
+        @media (max-width: 980px){ .cols { grid-template-columns:1fr; } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon"><i class="fas fa-brain"></i></div>
+                <span class="logo-text">InterviewAI</span>
+            </div>
+            <div class="nav-links">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="interview.html" class="nav-link">Interview</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <button class="btn-signin">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Your Profile</h1>
+            <p class="muted">View your details, latest interview score, and history.</p>
+        </div>
+    </section>
+
+    <main class="container" style="padding:32px 0 80px;">
+        <div class="cols">
+            <aside class="card">
+                <div class="profile-header">
+                    <div class="avatar" id="avatar">U</div>
+                    <div>
+                        <div id="user-name" style="font-weight:700; font-size:1.1rem;">John Doe</div>
+                        <div class="muted" id="user-email">john@example.com</div>
+                    </div>
+                </div>
+                <hr style="border:none;border-top:1px solid #eef2f7; margin:16px 0;">
+                <div class="grid" style="gap:12px;">
+                    <div class="stat"><span class="muted">Preferred Domain</span><strong id="pref-domain">—</strong></div>
+                    <div class="stat"><span class="muted">Preferred Level</span><strong id="pref-level">—</strong></div>
+                    <div class="stat"><span class="muted">Last Score</span><span class="badge" id="last-score">No interview yet</span></div>
+                </div>
+            </aside>
+
+            <section class="grid">
+                <div class="card">
+                    <h3 style="margin:0 0 10px;">Progress</h3>
+                    <canvas id="progress-chart" height="100"></canvas>
+                </div>
+                <div class="card">
+                    <h3 style="margin:0 0 10px;">Interview History</h3>
+                    <div class="muted" id="history-empty" style="display:none;">No interview history found. Complete an interview to see your progress!</div>
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Domain</th>
+                                <th>Level</th>
+                                <th>Avg Score</th>
+                                <th>Proficiency</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Populate basic user info from localStorage if available
+        const nameFromStorage = localStorage.getItem('user_name');
+        const emailFromStorage = localStorage.getItem('user_email');
+        if(nameFromStorage){ document.getElementById('user-name').textContent = nameFromStorage; document.getElementById('avatar').textContent = nameFromStorage[0].toUpperCase(); }
+        if(emailFromStorage){ document.getElementById('user-email').textContent = emailFromStorage; }
+        // Show last chosen domain/level from sessionStorage
+        const dom = sessionStorage.getItem('domain');
+        const lvl = sessionStorage.getItem('level');
+        if(dom) document.getElementById('pref-domain').textContent = dom;
+        if(lvl) document.getElementById('pref-level').textContent = lvl;
+    </script>
+    <script src="profile.js"></script>
+</body>
+</html>
+
+

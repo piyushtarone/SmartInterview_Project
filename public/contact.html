@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact • InterviewAI</title>
+    <link rel="stylesheet" href="con_styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Page-scoped styles for contact sections */
+        .page-hero {
+            padding: 120px 0 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .page-title { font-size: 3rem; font-weight: 800; color: #1f2937; margin-bottom: 14px; }
+        .page-subtitle { color: #6b7280; max-width: 780px; margin: 0 auto; }
+
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); padding: 24px; }
+        .stack { display: grid; gap: 24px; }
+
+        .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .input { width: 100%; padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; }
+        .input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .textarea { min-height: 150px; resize: vertical; }
+        .btn-submit { width: 100%; background: #2563eb; color: #fff; border: 0; padding: 14px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-submit:hover { background: #1d4ed8; }
+
+        .info-item { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; color: #374151; }
+        .info-item i { color: #2563eb; }
+
+        .hours { display: grid; grid-template-columns: 1fr auto; row-gap: 10px; color: #374151; }
+        .muted { color: #6b7280; }
+
+        .faq h4 { margin: 0; font-size: 1.05rem; color: #111827; }
+        .faq p { margin: 6px 0 0; color: #6b7280; }
+
+        @media (max-width: 960px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        function handleSubmit(event){
+            event.preventDefault();
+            const form = event.target;
+            const data = Object.fromEntries(new FormData(form).entries());
+            console.log("Contact message submitted:", data);
+            alert("Thanks! Your message has been sent. We'll get back to you within 24 hours.");
+            form.reset();
+        }
+    </script>
+    <link rel="icon" href="#">
+    <meta name="description" content="Contact InterviewAI. We're here to help you succeed in your interview preparation journey.">
+    <meta name="theme-color" content="#2563eb">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon"><i class="fas fa-brain"></i></div>
+                <span class="logo-text">InterviewAI</span>
+            </div>
+            <div class="nav-links">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="interview.html" class="nav-link">Interview</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <button class="btn-signin">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Get in Touch</h1>
+            <p class="page-subtitle">Have questions about InterviewAI? We're here to help you succeed in your interview preparation journey.</p>
+        </div>
+    </section>
+
+    <main class="container" style="padding:40px 0 80px;">
+        <div class="stack">
+            <div class="contact-grid">
+                <form class="card" onsubmit="handleSubmit(event)">
+                    <h3 style="margin-bottom:12px;color:#111827;">Send us a Message</h3>
+                    <p class="muted" style="margin-bottom:16px;">Fill out the form below and we'll get back to you within 24 hours.</p>
+                    <div class="form-row">
+                        <div><input class="input" type="text" name="firstName" placeholder="First Name" required></div>
+                        <div><input class="input" type="text" name="lastName" placeholder="Last Name" required></div>
+                    </div>
+                    <div style="margin-top:12px;"><input class="input" type="email" name="email" placeholder="Email Address" required></div>
+                    <div style="margin-top:12px;"><input class="input" type="text" name="subject" placeholder="Subject" required></div>
+                    <div style="margin-top:12px;"><textarea class="input textarea" name="message" placeholder="Tell us more about your question or feedback..." required></textarea></div>
+                    <div style="margin-top:16px;"><button class="btn-submit" type="submit">Send Message</button></div>
+                </form>
+
+                <aside class="stack">
+                    <div class="card" style="height:100%">
+                        <h3 style="margin-bottom:16px;color:#111827;">Contact Information</h3>
+                        <div class="stack" style="gap:14px;">
+                            <div class="info-item"><i class="fas fa-envelope"></i><div><div class="muted">Email</div><div>support@interviewai.com</div></div></div>
+                            <div class="info-item"><i class="fas fa-phone"></i><div><div class="muted">Phone</div><div>+1 (555) 123-4567</div></div></div>
+                            <div class="info-item"><i class="fas fa-location-dot"></i><div><div class="muted">Address</div><div>123 Innovation Drive, San Francisco, CA 94105</div></div></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <section class="card">
+                <h3 style="margin-bottom:16px;color:#111827;">Support Hours</h3>
+                <div class="hours">
+                    <div>Monday - Friday</div><div>9:00 AM - 6:00 PM PST</div>
+                    <div>Saturday</div><div>10:00 AM - 4:00 PM PST</div>
+                    <div>Sunday</div><div>Closed</div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3 style="margin-bottom:16px;color:#111827;">Frequently Asked Questions</h3>
+                <div class="stack" style="gap:14px;">
+                    <div class="faq">
+                        <h4>How does the AI interview work?</h4>
+                        <p>Our AI conducts voice-to-voice interviews, asking relevant questions based on your domain and providing real-time feedback.</p>
+                    </div>
+                    <div class="faq">
+                        <h4>Is my data secure?</h4>
+                        <p>Yes, we use enterprise-grade security measures to protect your personal information and interview data.</p>
+                    </div>
+                    <div class="faq">
+                        <h4>Can I practice for specific roles?</h4>
+                        <p>You can customize your interview experience for specific industries, roles, and skill levels.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

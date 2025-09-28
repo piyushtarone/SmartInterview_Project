@@ -1,0 +1,68 @@
+/* About page styles matching site theme */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; line-height: 1.7; color: #111827; background:#f8fafc; overflow-x:hidden; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Navbar (shared look) */
+.navbar { background:#fff; position: fixed; top:0; width:100%; z-index:1000; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.nav-container { max-width:1200px; margin:0 auto; padding:0 20px; height:70px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:10px; }
+.logo-icon { width:40px; height:40px; border-radius:8px; background:#2563eb; color:#fff; display:flex; align-items:center; justify-content:center; }
+.logo-text { font-weight:800; color:#1f2937; font-size:22px; }
+.nav-links { display:flex; align-items:center; gap:30px; }
+.nav-link { text-decoration:none; color:#6b7280; font-weight:600; }
+.nav-link:hover, .nav-link.active { color:#2563eb; }
+.btn-signin { background:#2563eb; color:#fff; border:0; padding:10px 18px; border-radius:8px; font-weight:600; cursor:pointer; }
+.btn-signin:hover { background:#1d4ed8; }
+
+/* Hero */
+.about-hero { padding: 120px 0 40px; background: linear-gradient(135deg,#eff6ff 0%, #e5edff 100%); text-align:center; }
+.about-title { font-size: 44px; font-weight: 800; color:#0f172a; margin-bottom: 12px; }
+.about-mission { color:#475569; max-width: 860px; margin: 0 auto; }
+
+/* Card utility */
+.card { background:#fff; border-radius: 14px; padding: 24px; box-shadow: 0 10px 30px rgba(2, 8, 23, 0.06); }
+
+/* Our Story */
+.our-story { padding: 28px 0; }
+.story-title { font-size: 28px; font-weight: 800; color:#0f172a; margin-bottom: 14px; }
+.story-content { }
+.story-paragraph { color:#374151; margin-bottom: 14px; }
+.our-story .container > .card { margin-top: 12px; }
+
+/* Values */
+.our-values { padding: 40px 0; }
+.values-title { font-size: 28px; font-weight: 800; color:#0f172a; text-align:center; margin-bottom: 18px; }
+.values-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 22px; }
+.value-card { text-align:left; }
+.value-card .value-icon { width: 44px; height: 44px; border-radius: 12px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#2563eb,#3b82f6); color:#fff; margin-bottom: 10px; font-size:20px; }
+.value-title { font-size: 18px; font-weight: 800; color:#111827; margin-bottom: 6px; }
+.value-description { color:#4b5563; }
+
+/* Commitment */
+.our-commitment { padding: 28px 0 60px; }
+.commitment-title { font-size: 28px; font-weight: 800; color:#0f172a; text-align:center; margin-bottom: 14px; }
+.commitment-content p { color:#374151; margin-bottom: 12px; }
+
+/* CTA */
+.cta { background:#2563eb; color:#fff; padding: 60px 0; text-align:center; }
+.cta-title { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+.cta-description { color:#dbeafe; max-width:700px; margin: 0 auto 22px; }
+.btn-cta { display:inline-block; background:#fff; color:#2563eb; padding:14px 26px; border-radius:10px; font-weight:700; text-decoration:none; }
+.btn-cta:hover { filter: brightness(0.98); }
+
+/* Wrapping content of story/values/commitment in cards for elevation */
+.our-story .container, .our-values .container, .our-commitment .container { max-width: 1100px; }
+.our-story .container { }
+.our-story .container .story-content { }
+.our-story .container .story-content { }
+.our-story .container .story-content .story-paragraph { }
+.our-story .container .card, .our-values .container .grid-wrap, .our-commitment .container .card { }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-link { display:none; }
+    .about-title { font-size: 32px; }
+}
+
+
