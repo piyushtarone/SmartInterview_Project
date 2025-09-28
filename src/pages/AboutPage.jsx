@@ -246,3 +246,4 @@ const AboutPage = () => {
 }
 
 export default AboutPage
+# New updated About page
